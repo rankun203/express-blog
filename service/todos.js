@@ -9,10 +9,16 @@ module.exports = {
     },
 
     findTodo: function (req, res, next) {
-        Todo.find(req.body, function (err, data) {
-            if (err) res.send(err);
-            else res.json(data);
-        });
+        if (req.params.id)
+            Todo.findById(req.params.id, function (err, data) {
+                if (err) throw err;
+                else res.json(data);
+            });
+        else
+            Todo.find(function (err, data) {
+                if (err) throw err;
+                else res.json(data);
+            });
     },
 
     updateTodo: function (req, res, next) {

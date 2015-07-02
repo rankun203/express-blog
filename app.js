@@ -1,3 +1,5 @@
+'use strict';
+
 // Require needed libs
 var express = require('express');
 var path = require('path');
