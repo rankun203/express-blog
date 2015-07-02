@@ -1,15 +1,24 @@
 var Todo = require('../models/Todo');
 
 function cb(res, err, data) {
-    if (err) throw err;
+    if (err)
+        res.status(500).send(err).end();
     else if (data == null)
         res.status(404).end();
-    else res.json(data);
+    else
+        res.json(data);
 }
 
 var TodoService = {
     createTodo: function (req, res, next) {
-        Todo.create(req.body, function (err, data) {
+        var body = req.body;
+        var todo = new Todo({
+            name: body.name,
+            completed: body.completed || false,
+            note: body.note || 'Todo note...'
+        });
+
+        Todo.create(todo, function (err, data) {
             cb(res, err, data);
         });
     },

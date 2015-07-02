@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="xmpl">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Modules test</title>
+    <script src="libs/angular/angular.js"></script>
+    <script src="libs/angular-route/angular-route.js"></script>
+    <script src="libs/angular-resource/angular-resource.js"></script>
+</head>
+<body>
+
+<ng-view></ng-view>
+
+</body>
+<script>
+    angular.module("xmpl.service", [])
+            .factory('todoService', ['$resource', function ($resource) {
+                return $resource('/todos/:id');
+            }]);
+
+    angular.module('xmpl',
+            [
+                'ngRoute',
+                'ngResource',
+                'xmpl.service'
+            ])
+            .controller('XmplTodoController', function ($scope, todoService) {
+                $scope.todos = todoService.query();
+            })
+            .controller('XmplTodoDetailController', ['$scope', '$routeParams', 'todoService',
+                function ($scope, $routeParams, todoService) {
+                    $scope.todo = todoService.get({id: $routeParams.id});
+                }])
+            .config(['$routeProvider', function ($routeProvider) {
+                $routeProvider
+                        .otherwise({
+                            templateUrl: 'todos.html',
+                            controller: 'XmplTodoController'
+                        })
+                        .when('/:id', {
+                            templateUrl: 'todoDetail.html',
+                            controller: 'XmplTodoDetailController'
+                        });
+            }]);
+</script>
+
+<!--Todo List view-->
+<script type="text/ng-template" id="todos.html">
+    <ul>
+        <li ng-repeat="todo in todos">
+            <label>
+                <input type="checkbox" ng-model="todo.completed"/>
+                <a href="#/{{todo._id}}">{{todo.name}}</a>
+            </label>
+        </li>
+    </ul>
+</script>
+
+<!--Todo Detail view-->
+<script type="text/ng-template" id="todoDetail.html">
+    <h1>{{todo.name}}</h1>
+    <label>
+        Completed: <input type="checkbox" ng-model="todo.completed"/>
+    </label>
+    <label>
+        <textarea>{{todo.note}}</textarea>
+    </label>
+</script>
+</html>
