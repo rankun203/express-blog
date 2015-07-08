@@ -1,7 +1,15 @@
 <h1>{{todo.name}}</h1>
 <label>
-    Completed: <input type="checkbox" ng-model="todo.completed"/>
+    Completed: <input type="checkbox" ng-model="todo.completed" ng-click="update(todo, todo._id)"/>
 </label>
+<hr/>
+Notes:
+<button ng-show="editing.indexOf(todo._id)" ng-click="edit(todo._id)">Edit</button>
+<button ng-show="!editing.indexOf(todo._id)" ng-click="update(todo, todo._id)">Save</button>
+<button ng-show="!editing.indexOf(todo._id)" ng-click="cancel(todo._id)">Cancel</button>
+
+<hr/>
+<div ng-show="editing.indexOf(todo._id)">{{todo.note}}</div>
 <label>
-    <textarea>{{todo.note}}</textarea>
+    <textarea ng-show="!editing.indexOf(todo._id)" ng-model="todo.note"></textarea>
 </label>
