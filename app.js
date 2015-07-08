@@ -36,6 +36,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'views')));
+app.use(require('coffee-middleware')(path.join(__dirname, 'views')));
 app.use(express.static(path.join(__dirname, 'views')));
 
 app.use('/users', users);
