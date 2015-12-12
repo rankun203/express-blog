@@ -1,20 +1,20 @@
 var express = require('express');
-var router = express.Router();
+var router  = express.Router();
 
 function getBlog(req, res, next) {
-    res.send({
-        status: 'success',
-        blog: [
-            {
-                title: 'Today',
-                content: 'It\'s first blog I posted'
-            }
-        ]
-    });
+  res.send({
+    status: 'success',
+    blog: [
+      {
+        title: 'Today',
+        content: 'It\'s first blog I posted'
+      }
+    ]
+  });
 }
 
 function blog(req, res, next) {
-    res.sendfile('views/blog.html');
+  res.sendfile('views/blog.html');
 }
 
 router.get('/blog', getBlog);

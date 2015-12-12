@@ -6,13 +6,13 @@
 var mongoose = require('mongoose');
 
 var TodoSchema = new mongoose.Schema({
-    name: {type: String, required: true, minlength: 2},
+  name: {type: String, required: true, minlength: 2},
 
-    completed: {type: Boolean, required: true},
+  completed: {type: Boolean, required: true},
 
-    note: {type: String, required: true},
+  note: {type: String, required: true},
 
-    updated_at: {type: Date, default: Date.now}
+  updated_at: {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model('Todo', TodoSchema);
